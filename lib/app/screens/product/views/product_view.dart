@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:kelola_produk/app/core/extensions/extension.dart';
 import 'package:kelola_produk/app/providers/product/product_provider.dart';
 import 'package:kelola_produk/app/routes/paths.dart';
 import 'package:lazyui/lazyui.dart' hide LzContextExtension;
-
-import '../../../data/models/product.dart';
 
 class ProductView extends ConsumerWidget {
   const ProductView({super.key});
