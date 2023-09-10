@@ -4,7 +4,7 @@ import 'package:riverpod/riverpod.dart';
 
 class ProductNotifier extends StateNotifier<AsyncValue<List<Product>>> {
   ProductNotifier() : super(const AsyncValue.loading()) {
-    getProduct();
+    // getProduct();
   }
 
   Future getProduct() async {
