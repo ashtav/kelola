@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:kelola_produk/app/core/extensions/extension.dart';
+import 'package:kelola_produk/app/core/extensions/riverpod_ext.dart';
 import 'package:lazyui/lazyui.dart';
 
 import '../../../providers/app_provider.dart';
@@ -14,12 +14,7 @@ class HomePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    List<Widget> pages = const [
-      HomeView(),
-      ProductView(),
-      TransactionView(),
-      AccountView()
-    ];
+    List<Widget> pages = const [HomeView(), ProductView(), TransactionView(), AccountView()];
 
     return Scaffold(
       body: appStateProvider.watch((state) => Stack(
@@ -49,8 +44,7 @@ class HomePage extends ConsumerWidget {
       bottomNavigationBar: Container(
         decoration: BoxDecoration(border: Br.only(['b'])),
         child: Intrinsic(
-          children: [Ti.home, Ti.archive, Ti.fileInvoice, Ti.user]
-              .generate((icon, i) {
+          children: [Ti.home, Ti.archive, Ti.fileInvoice, Ti.user].generate((icon, i) {
             List<String> labels = ['Home', 'Product', 'Transaction', 'Account'];
 
             return Expanded(child: appStateProvider.watch(
