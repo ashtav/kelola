@@ -20,6 +20,14 @@ class ProductNotifier extends StateNotifier<AsyncValue<List<Product>>> {
           'price': 10000,
           'stock': 10,
           'image': 'https://www.plantingtree.com/cdn/shop/products/3584_grande.jpg?v=1614270725'
+        },
+
+        {
+          'id': 2,
+          'name': 'Fresh Banana',
+          'price': 32700,
+          'stock': 40,
+          'image': 'https://img.freepik.com/premium-photo/glass-jar-filled-with-nutritious-vegan-smoothie-made-from-bananas-oatmeal-set-against-brigh_908985-15368.jpg?w=360'
         }
       ];
 
@@ -27,6 +35,39 @@ class ProductNotifier extends StateNotifier<AsyncValue<List<Product>>> {
       state = AsyncValue.data(products);
     } catch (e, s) {
       Errors.check(e, s);
+    }
+  }
+
+  Future create(Product data) async {
+    try {
+      LzToast.overlay('Adding product...');
+      await Future.delayed(1.s);
+
+      state.whenData((value) {
+        value.add(data);
+        state = AsyncValue.data(value);
+      });
+    } catch (e, s) {
+      Errors.check(e, s);
+    } finally {
+      LzToast.dismiss();
+    }
+  }
+
+  Future update(Product data, int id) async {
+    try {
+      LzToast.overlay('Updating product...');
+      await Future.delayed(1.s);
+
+      state.whenData((value) {
+        int index = value.indexWhere((e) => e.id == id);
+        value[index] = data;
+        state = AsyncValue.data(value);
+      });
+    } catch (e, s) {
+      Errors.check(e, s);
+    } finally {
+      LzToast.dismiss();
     }
   }
 

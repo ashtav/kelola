@@ -5,6 +5,8 @@ import 'package:kelola_produk/app/providers/product/product_provider.dart';
 import 'package:kelola_produk/app/routes/paths.dart';
 import 'package:lazyui/lazyui.dart' hide LzContextExtension;
 
+import '../../../data/models/product.dart';
+
 class ProductView extends ConsumerWidget {
   const ProductView({super.key});
 
@@ -17,10 +19,13 @@ class ProductView extends ConsumerWidget {
           title: const Text('Product'),
           actions: [
             const Icon(Ti.search).onPressed(() {
-              // pergi ke halaman search
+              context.push(Paths.searchProduct);
             }),
             const Icon(Ti.plus).onPressed(() {
-              context.push(Paths.formProduct);
+              context.push(Paths.formProduct).then((value) {
+                value as Product;
+                notifier.create(value);
+              });
             })
           ],
         ),
@@ -48,10 +53,15 @@ class ProductView extends ConsumerWidget {
                       onTap: () {
                         DropX.show(key,
                             options: ['Edit', 'Delete'].options(options: {
-                              1: ['Confirm', 'Cancel'].options()
+                              1: ['Confirm', 'Cancel'].options(pops: [1])
                             }), onSelect: (state) {
                           if (state.option == 'Edit') {
-                            context.push(Paths.formProduct, extra: item);
+                            context
+                                .push(Paths.formProduct, extra: item)
+                                .then((value) {
+                              value as Product;
+                              notifier.update(value, item.id!);
+                            });
                           } else if (state.option == 'Confirm') {
                             notifier.delete(item.id!);
                           }
